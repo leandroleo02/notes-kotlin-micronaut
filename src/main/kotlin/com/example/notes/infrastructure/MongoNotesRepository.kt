@@ -16,8 +16,8 @@ class MongoNotesRepository(private val mongoClient: MongoClient) : NotesReposito
 
     override fun retrieveAll(): Notes {
         return getCollection().find()
-            .map(::toNote)
             .toList()
+            .map(::toNote)
             .let(::Notes)
     }
 
@@ -29,7 +29,7 @@ class MongoNotesRepository(private val mongoClient: MongoClient) : NotesReposito
     }
 
     private fun toNote(noteDocument: NoteDocument) =
-        Note(noteDocument.id.toString(),
+        Note(noteDocument.id,
             noteDocument.title,
             noteDocument.category,
             noteDocument.text)
