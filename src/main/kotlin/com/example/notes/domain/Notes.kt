@@ -7,7 +7,7 @@ class Notes(private val notes: List<Note>) {
     }
 
     fun extractTitles(): List<String> {
-        return notes.map { it.title }
+        return convert { it.title }
     }
 
     fun <R> convert(transform: (Note) -> R): List<R> {
