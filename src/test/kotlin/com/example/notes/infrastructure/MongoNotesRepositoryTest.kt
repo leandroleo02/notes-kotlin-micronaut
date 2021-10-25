@@ -7,8 +7,10 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoCursor
 import com.mongodb.client.MongoDatabase
 import org.assertj.core.api.Assertions.assertThat
+import org.bson.conversions.Bson
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -42,8 +44,8 @@ class MongoNotesRepositoryTest {
 
         whenever(cursor.next())
             .thenReturn(
-                NoteDocument("1", "Learning", "green", "First Note in Kotlin"),
-                NoteDocument("2", "Goku", "orange", "Olá, eu sou o Goku")
+                NoteDocument("6175f4b9d75e0c0d5cda0f31", "Learning", "green", "First Note in Kotlin"),
+                NoteDocument("6175f4b9d75e0c0d5cda0f32", "Goku", "orange", "Olá, eu sou o Goku")
             )
 
         whenever(mongoCollection.find()).thenReturn(iterable)
@@ -54,13 +56,26 @@ class MongoNotesRepositoryTest {
             .isNotNull
     }
 
-//    @Test
-//    fun findNoteById() {
-//        Mockito.`when`(mockMongoClient.findById("5"))
-//            .thenReturn(Optional.of(NoteDocument("5", "Cold", "white", "Winter is coming!")))
-//        val note = mongoNotesRepository.findById("5")
-//        assertThat(note).isNotNull
-//    }
+    @Test
+    fun findNoteById() {
+        val iterable: FindIterable<NoteDocument> = mock()
+        val cursor: MongoCursor<NoteDocument> = mock()
+
+        whenever(iterable.iterator()).thenReturn(cursor)
+        whenever(cursor.hasNext())
+            .thenReturn(true, false)
+
+        whenever(cursor.next())
+            .thenReturn(
+                NoteDocument("6175f4b9d75e0c0d5cda0f31", "Learning", "green", "First Note in Kotlin")
+            )
+
+        whenever(mongoCollection.find(any(Bson::class.java))).thenReturn(iterable)
+
+        val note = mongoNotesRepository.findById("6175f4b9d75e0c0d5cda0f31")
+
+        assertThat(note).isNotNull
+    }
 
 //    private fun noteFixture(): List<NoteDocument> {
 //        return listOf(
