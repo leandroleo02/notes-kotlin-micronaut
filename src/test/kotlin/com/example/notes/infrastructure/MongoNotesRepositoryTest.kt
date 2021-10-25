@@ -36,8 +36,9 @@ class MongoNotesRepositoryTest {
     @Test
     fun readAllNotes() {
         val mockCursorBuilder = MockCursorBuilder(mongoCollection)
-        mockCursorBuilder.noFilter()
-        mockCursorBuilder.returningDocuments(*noteFixture())
+        mockCursorBuilder
+            .noFilter()
+            .returningDocuments(*noteFixture())
 
         val notes = mongoNotesRepository.retrieveAll()
 
@@ -48,10 +49,11 @@ class MongoNotesRepositoryTest {
     @Test
     fun findNoteById() {
         val mockCursorBuilder = MockCursorBuilder(mongoCollection)
-        mockCursorBuilder.anyFilter()
-        mockCursorBuilder.returningDocuments(
-            NoteDocument("6175f4b9d75e0c0d5cda0f31", "Learning", "green", "First Note in Kotlin")
-        )
+        mockCursorBuilder
+            .anyFilter()
+            .returningDocuments(
+                NoteDocument("6175f4b9d75e0c0d5cda0f31", "Learning", "green", "First Note in Kotlin")
+            )
 
         val note = mongoNotesRepository.findById("6175f4b9d75e0c0d5cda0f31")
 
@@ -78,15 +80,17 @@ class MockCursorBuilder(private val mongoCollection: MongoCollection<NoteDocumen
         whenever(iterable.iterator()).thenReturn(cursor)
     }
 
-    fun noFilter() {
+    fun noFilter(): MockCursorBuilder {
         whenever(mongoCollection.find()).thenReturn(iterable)
+        return this
     }
 
-    fun anyFilter() {
+    fun anyFilter(): MockCursorBuilder {
         whenever(mongoCollection.find(any(Bson::class.java))).thenReturn(iterable)
+        return this
     }
 
-    fun returningDocuments(vararg documents: NoteDocument) {
+    fun returningDocuments(vararg documents: NoteDocument): MockCursorBuilder {
         whenever(cursor.hasNext())
             .thenReturn(true, *mapToHasNext(*documents))
 
@@ -95,6 +99,7 @@ class MockCursorBuilder(private val mongoCollection: MongoCollection<NoteDocumen
                 documents[0],
                 *documents.drop(1).toTypedArray()
             )
+        return this
     }
 
     private fun mapToHasNext(vararg documents: NoteDocument): Array<Boolean> {
