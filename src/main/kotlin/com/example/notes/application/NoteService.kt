@@ -10,7 +10,7 @@ import jakarta.inject.Singleton
 @Singleton
 class NoteService(private val notesRepository: NotesRepository) {
 
-    companion object: Logging {
+    companion object : Logging {
         val logger = logger()
     }
 

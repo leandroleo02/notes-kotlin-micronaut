@@ -29,11 +29,12 @@ class MongoNotesRepository(private val mongoClient: MongoClient) : NotesReposito
     }
 
     private fun toNote(noteDocument: NoteDocument) =
-        Note(noteDocument.id,
+        Note(
+            noteDocument.id,
             noteDocument.title,
             noteDocument.category,
-            noteDocument.text)
-
+            noteDocument.text
+        )
 
     private fun getCollection() =
         mongoClient

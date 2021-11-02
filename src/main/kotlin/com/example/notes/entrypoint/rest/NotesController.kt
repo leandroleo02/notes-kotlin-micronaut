@@ -39,5 +39,5 @@ data class NotesResponse(
     val text: String,
 ) {
     constructor(note: Note) :
-            this(note.id, note.title, note.category, note.text)
+        this(note.id, note.title, note.category, note.text)
 }

@@ -39,10 +39,11 @@ class NotesTest {
 
     private fun noteFixture(): List<Note> {
         return listOf(
-            Note("1", "Learning","green","First Note in Kotlin"),
-            Note("2", "Goku","orange","Olá, eu sou o Goku"),
-            Note("3", "Tyrion","gold","I drink and I know things"),
-            Note("4", "Funny","gold","His legs flail about as if independent from his body!"),
-            Note("5", "Cold","white","Winter is coming!"),)
+            Note("1", "Learning", "green", "First Note in Kotlin"),
+            Note("2", "Goku", "orange", "Olá, eu sou o Goku"),
+            Note("3", "Tyrion", "gold", "I drink and I know things"),
+            Note("4", "Funny", "gold", "His legs flail about as if independent from his body!"),
+            Note("5", "Cold", "white", "Winter is coming!"),
+        )
     }
 }

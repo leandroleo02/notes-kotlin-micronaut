@@ -9,18 +9,18 @@ import java.io.InputStream
 
 @Singleton
 @Requires(env = ["dev"])
-class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
+class CsvNotesRepository(private val csvReader: CsvReader) : NotesRepository {
 
     override fun retrieveAll(): Notes {
         val notes = csvReader.readFile(file()!!)
-                .map(::toNote)
+            .map(::toNote)
         return Notes(notes)
     }
 
     override fun findById(id: String): Note? {
         return csvReader.readFile(file()!!)
-                .map(::toNote)
-                .find { note -> note.id == id }
+            .map(::toNote)
+            .find { note -> note.id == id }
     }
 
     private fun toNote(line: Array<String>): Note {
@@ -29,6 +29,6 @@ class CsvNotesRepository(private val csvReader: CsvReader): NotesRepository {
 
     private fun file(): InputStream? {
         return this::class.java.classLoader
-                .getResourceAsStream("notes/notes.csv")
+            .getResourceAsStream("notes/notes.csv")
     }
 }

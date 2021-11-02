@@ -25,7 +25,7 @@ class CsvNotesRepositoryTest {
     fun findNoteWithAllValues() {
         val note = csvNotesRepository.findById("5")
         assertThat(note)
-                .usingRecursiveComparison()
-                .isEqualTo(Note("5", "Cold", "white", "Winter is coming!"))
+            .usingRecursiveComparison()
+            .isEqualTo(Note("5", "Cold", "white", "Winter is coming!"))
     }
 }

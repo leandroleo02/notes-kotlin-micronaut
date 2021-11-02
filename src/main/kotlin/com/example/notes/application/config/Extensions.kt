@@ -7,7 +7,7 @@ import kotlin.reflect.full.companionObject
 interface Logging
 
 fun getLogger(forClass: Class<*>): Logger =
-        LoggerFactory.getLogger(forClass)
+    LoggerFactory.getLogger(forClass)
 
 fun <T : Any> getClassForLogging(javaClass: Class<T>): Class<*> {
     return javaClass.enclosingClass?.takeIf {
@@ -16,4 +16,4 @@ fun <T : Any> getClassForLogging(javaClass: Class<T>): Class<*> {
 }
 
 inline fun <reified T : Logging> T.logger(): Logger =
-        getLogger(getClassForLogging(T::class.java))
+    getLogger(getClassForLogging(T::class.java))
