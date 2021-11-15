@@ -7,9 +7,15 @@ charset = utf-8
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
+max_line_length = 200
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.{kt, kts}]
+# Never use star imports
+ij_kotlin_name_count_to_use_star_import = 99
+ij_kotlin_name_count_to_use_star_import_for_members = 99
 
 [*.java]
 # Never use star imports

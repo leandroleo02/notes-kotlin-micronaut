@@ -40,7 +40,12 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    testImplementation "org.testcontainers:testcontainers:1.16.2"
+
+    implementation platform("org.testcontainers:testcontainers-bom:1.16.2")
+//    testImplementation("org.testcontainers:mysql")
+    //testImplementation "org.testcontainers:testcontainers:1.16.2"
+    testImplementation("org.testcontainers:mongodb")
+    testImplementation("org.testcontainers:junit-jupiter")
 }
 
 
@@ -65,7 +70,7 @@ tasks {
 }
 
 test {
-    //jvmArgs '-Dmicronaut.env.deduction=false'
+    jvmArgs '-Dmicronaut.env.deduction=false'
     testLogging {
         events("passed", "skipped", "failed")
     }
