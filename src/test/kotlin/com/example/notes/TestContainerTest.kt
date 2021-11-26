@@ -9,6 +9,7 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.model.Filters
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Requires
+import io.micronaut.context.annotation.Value
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -30,7 +31,11 @@ class TestContainerTest {
     @Inject
     private lateinit var notesRepository: NotesRepository
 
-    @Inject lateinit var mongoClient: MongoClient
+    @Inject
+    private lateinit var mongoClient: MongoClient
+
+    @Value("\${app.db}")
+    private lateinit var database: String
 
 //    @BeforeAll
 //    @JvmStatic
@@ -57,7 +62,7 @@ class TestContainerTest {
     }
 
     private fun collection() = mongoClient
-        .getDatabase("notesapi")
+        .getDatabase(database)
         .getCollection("notes", NoteDocument::class.java)
 
     private fun noteFixture(): List<NoteDocument> {

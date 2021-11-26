@@ -12,13 +12,13 @@ import java.io.InputStream
 class CsvNotesRepository(private val csvReader: CsvReader) : NotesRepository {
 
     override fun retrieveAll(): Notes {
-        val notes = csvReader.readFile(file()!!)
+        val notes = csvReader.readFile(file())
             .map(::toNote)
         return Notes(notes)
     }
 
     override fun findById(id: String): Note? {
-        return csvReader.readFile(file()!!)
+        return csvReader.readFile(file())
             .map(::toNote)
             .find { note -> note.id == id }
     }
@@ -27,8 +27,9 @@ class CsvNotesRepository(private val csvReader: CsvReader) : NotesRepository {
         return Note(line[0], line[1], line[2], line[3])
     }
 
-    private fun file(): InputStream? {
+    private fun file(): InputStream {
         return this::class.java.classLoader
             .getResourceAsStream("notes/notes.csv")
+            .takeIf { it != null } ?: throw IllegalStateException()
     }
 }

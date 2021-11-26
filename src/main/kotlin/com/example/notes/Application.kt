@@ -6,6 +6,6 @@ fun main(args: Array<String>) {
     build()
         .args(*args)
         .packages("com.example.notes")
-        //.deduceEnvironment(false)
+        .deduceEnvironment(false)
         .start()
 }

@@ -30,7 +30,7 @@ class MongoNotesRepositoryTest {
         whenever(mockMongoClient.getDatabase(anyString())).thenReturn(mongoDatabase)
         whenever(mongoDatabase.getCollection(anyString(), eq(NoteDocument::class.java))).thenReturn(mongoCollection)
 
-        mongoNotesRepository = MongoNotesRepository(mockMongoClient)
+        mongoNotesRepository = MongoNotesRepository(mockMongoClient, "notesapi")
     }
 
     @Test

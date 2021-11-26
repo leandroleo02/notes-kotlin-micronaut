@@ -7,12 +7,17 @@ import com.example.notes.infrastructure.documents.NoteDocument
 import com.mongodb.client.MongoClient
 import com.mongodb.client.model.Filters
 import io.micronaut.context.annotation.Requires
+import io.micronaut.context.annotation.Value
 import jakarta.inject.Singleton
 import org.bson.types.ObjectId
 
 @Singleton
 @Requires(notEnv = ["dev"])
-class MongoNotesRepository(private val mongoClient: MongoClient) : NotesRepository {
+class MongoNotesRepository(
+    private val mongoClient: MongoClient,
+    @Value("\${app.db}")
+    private val database: String
+) : NotesRepository {
 
     override fun retrieveAll(): Notes {
         return getCollection().find()
@@ -38,6 +43,6 @@ class MongoNotesRepository(private val mongoClient: MongoClient) : NotesReposito
 
     private fun getCollection() =
         mongoClient
-            .getDatabase("notesapi")
+            .getDatabase(database)
             .getCollection("notes", NoteDocument::class.java)
 }

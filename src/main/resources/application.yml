@@ -1,3 +1,6 @@
 micronaut:
   application:
     name: notesKotlinMicronaut
+
+app:
+  db: notesapi
